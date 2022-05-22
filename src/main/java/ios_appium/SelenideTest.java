@@ -10,14 +10,9 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 
 public class SelenideTest {
-	 /**
-     * テストの前に1度だけ実施
-     */
     @BeforeClass
     public static void beforeClass() {
-        // Chrome Driverのパスを指定
         System.setProperty("webdriver.chrome.driver", "./chromedriver");
-        // Chromeを指定
         Configuration.browser = WebDriverRunner.CHROME;
     }
 
@@ -25,8 +20,7 @@ public class SelenideTest {
     public void qiitaOpenTest() {
         // Qiitaを表示
         open("https://qiita.com");
-
-        // Selenideで検索
+        // 検索
         SelenideElement searchInput = $(".st-Header_searchInput");
         searchInput.sendKeys("Selenide");
         searchInput.pressEnter();

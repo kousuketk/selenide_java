@@ -7,6 +7,7 @@ import java.net.URL;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -16,37 +17,35 @@ import com.codeborne.selenide.WebDriverProvider;
 
 import io.appium.java_client.ios.IOSDriver;
 
-public class SelenideIosSimuSafari {
+public class SelenideIosSimuApp {
 	@BeforeClass
     public static void beforeClass() {
         Configuration.startMaximized = false;
         Configuration.browserSize = null;
         Configuration.timeout = 3000;
-        Configuration.browser = SimulatorSafariDriverProvider.class.getName();
+        Configuration.browser = SimulatorAppDriverProvider.class.getName();
     }
 
     @Test
-    public void qiitaOpenTest() {
-        // Qiitaを表示
-        open("https://qiita.com");
-        // 検索
-        SelenideElement searchButton = $(".st-NewHeader_searchButton");
-        SelenideElement searchInput = $(".st-NewHeader_searchModalInput");
-        searchButton.click();
-        searchInput.sendKeys("Selenide");
-        searchInput.pressEnter();
+    public void inputTest() {
+        // アプリを起動
+        open();
+        // textFieldに入力
+        SelenideElement userNameInput = $(By.className("XCUIElementTypeTextField"));
+        userNameInput.click();
+        userNameInput.sendKeys("sample input by selenide");
         sleep(3000);
     }
 }
 
-class SimulatorSafariDriverProvider implements WebDriverProvider {
+class SimulatorAppDriverProvider implements WebDriverProvider {
     @SuppressWarnings("rawtypes")
     public WebDriver createDriver(DesiredCapabilities capabilities) {
-        capabilities.setCapability("automationName", "XCUITest");
+    	capabilities.setCapability("automationName", "XCUITest");
         capabilities.setCapability("deviceName", "iPhone 13");
         capabilities.setCapability("platformName", "iOS");
         capabilities.setCapability("platformVersion", "15.2");
-        capabilities.setCapability("browserName", "Safari");
+        capabilities.setCapability("bundleId", "jp.classswift.sampleSwift");
         try {
             return new IOSDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
         } catch (MalformedURLException e) {

@@ -1,0 +1,11 @@
+# chromedriver
+chromedriver
+
+# build/reports
+build/reports
+
+# other mvn files
+.classpath
+target
+.project
+.settings/
